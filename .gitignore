@@ -35,3 +35,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 packages/*/node_modules
+packages/*/dist
