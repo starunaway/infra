@@ -37,14 +37,16 @@ export class ScmEntity {
   @Column()
   gitRepoName: string;
 
-  //   @Column({ nullable: true })
-  //   @OneToOne(
-  //     () => ScmVersionEntity
-  //     // 如果需要反向关联，可以加上第二个属性
-  //     //   (relatedEntity) => relatedEntity.parent
-  //   )
-  //   @JoinColumn({ name: 'parentId' })
-  //   latestVerInfo: ScmVersionEntity;
+  @OneToOne(
+    () => ScmVersionEntity,
+    (scmVersion) => {
+      console.log('scmVersion', scmVersion);
+    },
+
+    { nullable: true, eager: true }
+  )
+  @JoinColumn({ name: 'latestVerInfo' })
+  latestVerInfo: ScmVersionEntity;
 
   @Column({ nullable: true })
   stars: number;
