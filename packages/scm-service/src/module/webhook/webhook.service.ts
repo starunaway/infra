@@ -23,7 +23,7 @@ export class WebhookService {
     return 'This action adds a new webhook';
   }
 
-  jenkinsTrigger(createWebhookDto: CreateWebhookDto) {
+  jenkinsTrigger(createWebhookDto: CreateWebhookDto, files: File[]) {
     console.log(createWebhookDto);
     return 'This action adds a new webhook';
   }
