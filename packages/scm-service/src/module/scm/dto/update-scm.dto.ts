@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateScmDto } from './create-scm.dto';
+import { ScmEntity } from '../entities/scm.entity';
 
-export class UpdateScmDto extends PartialType(CreateScmDto) {}
+export class UpdateScmDto extends PartialType(ScmEntity) {}

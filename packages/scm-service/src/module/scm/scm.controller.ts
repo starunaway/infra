@@ -2,13 +2,22 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ScmService } from './scm.service';
 import { CreateScmDto } from './dto/create-scm.dto';
 import { UpdateScmDto } from './dto/update-scm.dto';
+// import { ScmEntity } from './entities/scm.entity';
 
 @Controller('scm')
 export class ScmController {
   constructor(private readonly scmService: ScmService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createScmDto: CreateScmDto) {
+    // const scmEntity = new ScmEntity();
+    // scmEntity.name = createScmDto.;
+    // // 设置其他字段...
+
+    // const errors = await validate(scmEntity);
+    // if (errors.length > 0) {
+    //   throw new BadRequestException(errors);
+    // }
     return this.scmService.create(createScmDto);
   }
 

@@ -1,21 +1,26 @@
 import { IsString, Matches } from 'class-validator';
-import { ScmVersionEntity } from 'src/module/scm-version/entities/scm-version.entity';
+
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
+  Generated,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('scm')
+@Unique(['name'])
 export class ScmEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number; // 标记为主键，值自动生成
+
+  @Column({ type: 'uuid' })
+  @Generated('uuid')
+  uuid: string; // 自动生成的UUID
 
   @Column({ length: 30 })
   @IsString()
@@ -37,16 +42,8 @@ export class ScmEntity {
   @Column()
   gitRepoName: string;
 
-  @OneToOne(
-    () => ScmVersionEntity,
-    (scmVersion) => {
-      console.log('scmVersion', scmVersion);
-    },
-
-    { nullable: true, eager: true }
-  )
-  @JoinColumn({ name: 'latestVerInfo' })
-  latestVerInfo: ScmVersionEntity;
+  @Column({ nullable: true })
+  latestVerId: number;
 
   @Column({ nullable: true })
   stars: number;

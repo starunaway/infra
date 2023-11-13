@@ -3,9 +3,11 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
+  BadRequestException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiException } from './api.exception';
+import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -19,6 +21,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
       response.status(status).json({
         code: exception.getErrorCode(),
         message: exception.getErrorMessage(),
+      });
+      return;
+    }
+
+    if (exception instanceof BadRequestException) {
+      const res = exception.getResponse() as Record<string, any> | string;
+      response.status(status).json({
+        code: ApiErrorCode.BadRequestException,
+        message: typeof res === 'object' ? res?.message : res,
       });
       return;
     }

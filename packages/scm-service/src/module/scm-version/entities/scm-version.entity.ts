@@ -5,6 +5,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
   JoinColumn,
   ManyToOne,
   OneToOne,
@@ -17,8 +18,12 @@ export class ScmVersionEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number; // 标记为主键，值自动生成
 
+  @Column({ type: 'uuid' })
+  @Generated('uuid')
+  uuid: string; // 自动生成的UUID
+
   @Column()
-  parentId: number;
+  parentId: string;
 
   @Column({ nullable: true })
   verName: string;
