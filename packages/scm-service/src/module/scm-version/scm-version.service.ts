@@ -20,8 +20,11 @@ export class ScmVersionService {
       const count = await entityManager.count(ScmVersionEntity, { where: { parentId } });
 
       createScmVersionDto.verName = (count + 1).toString();
+
+      const scmVersionEntity = new ScmVersionEntity();
+      Object.assign(scmVersionEntity, createScmVersionDto);
       // 保存新的ScmVersionEntity
-      await entityManager.save(createScmVersionDto);
+      await entityManager.save(scmVersionEntity);
     });
   }
 

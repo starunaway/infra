@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateScmVersionDto {
+export class JenkinsTriggerDto {
   @IsNotEmpty({
     message: '关联的 Scm 不能为空',
   })
@@ -28,9 +28,4 @@ export class CreateScmVersionDto {
 
   @IsString()
   createdBy: string;
-
-  @IsString()
-  fileUrl: string;
-
-  sourceMapUrl?: string;
 }

@@ -16,11 +16,7 @@ import {
 @Unique(['name'])
 export class ScmEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number; // 标记为主键，值自动生成
-
-  @Column({ type: 'uuid' })
-  @Generated('uuid')
-  uuid: string; // 自动生成的UUID
+  id: string; // 标记为主键，值自动生成
 
   @Column({ length: 30 })
   @IsString()

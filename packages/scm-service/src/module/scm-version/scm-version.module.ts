@@ -8,5 +8,6 @@ import { ScmVersionEntity } from './entities/scm-version.entity';
   imports: [TypeOrmModule.forFeature([ScmVersionEntity])],
   controllers: [ScmVersionController],
   providers: [ScmVersionService],
+  exports: [ScmVersionService],
 })
 export class ScmVersionModule {}

@@ -34,8 +34,22 @@ export class ScmService {
     return `This action returns all scm`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} scm`;
+  async findOne(scm: string) {
+    const scmItem = await this.scmRepository.findOne({
+      where: {
+        name: scm,
+      },
+    });
+
+    if (!scmItem) {
+      throw new ApiException(
+        `Scm with name ${scm} not found`,
+        ApiErrorCode.ScmNotFound,
+        HttpStatus.OK
+      );
+    }
+
+    return scmItem;
   }
 
   update(id: number, updateScmDto: UpdateScmDto) {
