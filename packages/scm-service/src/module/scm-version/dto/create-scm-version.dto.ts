@@ -30,7 +30,7 @@ export class CreateScmVersionDto {
   createdBy: string;
 
   @IsString()
-  fileUrl: string;
+  filePath: string;
 
-  sourceMapUrl?: string;
+  sourceMapPath?: string;
 }

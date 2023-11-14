@@ -31,10 +31,10 @@ export class ScmVersionEntity {
   gitCommitId: string;
 
   @Column({ nullable: true })
-  fileUrl: string;
+  filePath: string;
 
   @Column({ nullable: true })
-  sourceMapUrl: string;
+  sourceMapPath: string;
 
   @Column({ nullable: true })
   enable: boolean;

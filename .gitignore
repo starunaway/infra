@@ -36,3 +36,4 @@ lerna-debug.log*
 
 packages/*/node_modules
 packages/*/dist
+**/*/.env

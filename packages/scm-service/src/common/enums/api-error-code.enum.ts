@@ -9,6 +9,7 @@ export enum ApiErrorCode {
   // scm 版本信息 14 开头
   // 数据库查询相关 15 开头
   // webhook 相关 16 开头
+  WebhookError = 16001,
   // 查询 gitlab 17开头
   // 公共类型
   // 参数错误
