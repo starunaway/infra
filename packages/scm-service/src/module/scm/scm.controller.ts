@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, Logger } from '@nestjs/common';
 import { ScmService } from './scm.service';
 import { CreateScmDto } from './dto/create-scm.dto';
 import { UpdateScmDto } from './dto/update-scm.dto';
@@ -6,7 +6,11 @@ import { UpdateScmDto } from './dto/update-scm.dto';
 
 @Controller('scm')
 export class ScmController {
-  constructor(private readonly scmService: ScmService) {}
+  constructor(
+    private readonly scmService: ScmService,
+    @Inject('ScmLogger')
+    private readonly logger: Logger
+  ) {}
 
   @Post('create')
   create(@Body() createScmDto: CreateScmDto) {
@@ -18,6 +22,7 @@ export class ScmController {
     // if (errors.length > 0) {
     //   throw new BadRequestException(errors);
     // }
+    this.logger.log('createScmDto', createScmDto);
     return this.scmService.create(createScmDto);
   }
 

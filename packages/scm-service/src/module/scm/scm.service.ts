@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable, Logger } from '@nestjs/common';
 import { CreateScmDto } from './dto/create-scm.dto';
 import { UpdateScmDto } from './dto/update-scm.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,13 +13,16 @@ import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
 export class ScmService {
   constructor(
     @InjectRepository(ScmEntity)
-    private scmRepository: Repository<ScmEntity>
+    private scmRepository: Repository<ScmEntity>,
+    @Inject('ScmLogger') private readonly logger: Logger
   ) {}
 
   async create(createScmDto: CreateScmDto) {
+    this.logger.log('createScmDto', createScmDto);
     try {
       await this.scmRepository.save(createScmDto);
     } catch (error) {
+      this.logger.error(error);
       if (error instanceof QueryFailedError) {
         // 如果是QueryFailedError，那么可能是因为违反了唯一约束
         throw new ApiException('name 重复', ApiErrorCode.DuplicateException, HttpStatus.OK);
@@ -40,6 +43,7 @@ export class ScmService {
         name: scm,
       },
     });
+    this.logger.log(scm, scmItem);
 
     if (!scmItem) {
       throw new ApiException(

@@ -1,4 +1,13 @@
-import { Controller, Post, Body, UseInterceptors, UploadedFiles, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseInterceptors,
+  UploadedFiles,
+  HttpStatus,
+  Logger,
+  Inject,
+} from '@nestjs/common';
 import { WebhookService } from './webhook.service';
 import { GitlabPushEventDTO } from './dto/gitlab-push.dto';
 import { AnyFilesInterceptor, FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
@@ -16,7 +25,9 @@ export class WebhookController {
     private readonly webhookService: WebhookService,
     private readonly scmService: ScmService,
     private readonly scmVersionService: ScmVersionService,
-    private readonly ossService: OssService
+    private readonly ossService: OssService,
+    @Inject('WebhookLogger')
+    private readonly logger: Logger
   ) {}
 
   @Post('/gitlab/trigger')
@@ -30,11 +41,13 @@ export class WebhookController {
     @UploadedFiles() files: Express.Multer.File[],
     @Body() body: JenkinsTriggerDto
   ) {
+    this.logger.log('files', files);
+    this.logger.log('body', body);
     try {
       const { scm } = body;
 
       const scmItem = await this.scmService.findOne(scm);
-
+      this.logger.log('scmItem', scmItem);
       // todo 这里需要上传到 oss
       const uploadPromises = files.map((file) => {
         const { fieldname, originalname } = file;
@@ -49,6 +62,7 @@ export class WebhookController {
 
       const res = await Promise.allSettled(uploadPromises);
 
+      this.logger.log('uploadPromises', res);
       let filePath = '';
       let sourceMapPath = '';
       let ossFileUrl = '';

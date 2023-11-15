@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { WebhookService } from './webhook.service';
 import { WebhookController } from './webhook.controller';
 import { ScmModule } from '../scm/scm.module';
@@ -8,6 +8,14 @@ import { OssModule } from '../oss/oss.module';
 @Module({
   imports: [ScmModule, ScmVersionModule, OssModule],
   controllers: [WebhookController],
-  providers: [WebhookService],
+  providers: [
+    WebhookService,
+    {
+      provide: 'WebhookLogger',
+      useFactory: () => {
+        return new Logger('Webhook');
+      },
+    },
+  ],
 })
 export class WebhookModule {}
