@@ -79,6 +79,7 @@ export class WebhookController {
       await this.scmVersionService.create(versionInfo);
       return {
         ossFileUrl,
+        filePath,
       };
     } catch (e) {
       throw new ApiException(e.message, ApiErrorCode.WebhookError, HttpStatus.OK);

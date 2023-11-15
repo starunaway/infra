@@ -13,27 +13,31 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('scm_version')
+@Entity('scm_version', {
+  name: 'SCM版本表',
+})
 export class ScmVersionEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string; // 标记为主键，值自动生成
 
-  @Column()
+  @Column({
+    comment: '关联的SCM仓库',
+  })
   parentId: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: '构建版本' })
   verName: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: '构建分支' })
   branch: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: 'git commit' })
   gitCommitId: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: '产物存储路径' })
   filePath: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: 'sourceMap存储路径' })
   sourceMapPath: string;
 
   @Column({ nullable: true })
@@ -45,7 +49,7 @@ export class ScmVersionEntity {
   @Column({ nullable: true })
   creator: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: 'git 提交信息' })
   commitMsg: string;
 
   @Column({ nullable: true })

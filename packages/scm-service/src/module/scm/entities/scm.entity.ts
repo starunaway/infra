@@ -12,13 +12,16 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('scm')
+@Entity('scm', { name: 'SCM表' })
 @Unique(['name'])
 export class ScmEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'id',
+    comment: '主键',
+  })
   id: string; // 标记为主键，值自动生成
 
-  @Column({ length: 30 })
+  @Column({ length: 30, comment: '名称' })
   @IsString()
   @Matches(/^[a-zA-Z0-9_@]+$/, { message: '只允许包含数字、大小写字母、下划线和@符号' })
   name: string; //
@@ -26,37 +29,44 @@ export class ScmEntity {
   @Column({
     type: 'text',
     nullable: true,
+    comment: '描述',
   })
   desc: string; //
 
-  @Column()
+  @Column({
+    comment: '创建人',
+  })
   creator: string;
 
-  @Column()
+  @Column({
+    comment: 'git仓库地址',
+  })
   gitRepoUrl: string;
 
-  @Column()
+  @Column({
+    comment: 'git仓库名称',
+  })
   gitRepoName: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: '最新版本' })
   latestVerId: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: 'scm 仓库收藏数' })
   stars: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: 'scm 仓库图标' })
   icon: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, comment: '构建分支' })
   buildBranch: string;
 
-  @Column({ type: 'longtext', nullable: true })
+  @Column({ type: 'longtext', nullable: true, comment: '部署配置' })
   deployConf: string;
 
-  @Column({ type: 'longtext', nullable: true })
+  @Column({ type: 'longtext', nullable: true, comment: 'nginx配置文件' })
   nginxConf: string;
 
-  @Column({ type: 'longtext', nullable: true })
+  @Column({ type: 'longtext', nullable: true, comment: '构建配置' })
   buildConf: string;
 
   @Column({ nullable: true })

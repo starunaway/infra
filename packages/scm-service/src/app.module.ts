@@ -25,6 +25,7 @@ const isProd = process.env.NODE_ENV == 'production';
       password: 'root', // 密码
       database: 'scm', //数据库名
       synchronize: true, //是否自动同步实体文件,生产环境建议关闭
+      timezone: 'Asia/Shanghai', // 设置时区
     }),
 
     WebhookModule,
