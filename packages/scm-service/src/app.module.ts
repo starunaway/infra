@@ -19,12 +19,12 @@ const isProd = process.env.NODE_ENV == 'production';
     TypeOrmModule.forRoot({
       type: 'mysql',
       autoLoadEntities: true, //自动加载实体
-      host: 'localhost',
-      port: 3306, // 端口号
-      username: 'root', // 用户名
-      password: 'root', // 密码
-      database: 'scm', //数据库名
-      synchronize: true, //是否自动同步实体文件,生产环境建议关闭
+      host: process.env.SQL_HOST,
+      port: parseInt(process.env.SQL_PORT), // 端口号
+      username: process.env.SQL_USERNAME, // 用户名
+      password: process.env.SQL_PASSWORD, // 密码
+      database: process.env.SQL_DATABASE, //数据库名
+      synchronize: !isProd, //是否自动同步实体文件,生产环境建议关闭
       timezone: 'Asia/Shanghai', // 设置时区
     }),
 
